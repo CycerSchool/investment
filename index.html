@@ -5,36 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>雙欄瀑布流看盤 Dashboard</title>
     <style>
-        /* 基礎樣式：允許整頁上下滾動 */
+        /* 基礎樣式：允許整頁隨著圖表增加而自由往下滾動 */
         html, body {
             margin: 0;
-            padding: 10px;
+            padding: 15px;
             background-color: #0F0F0F;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             box-sizing: border-box;
         }
 
-        /* 雙欄並排架構 */
+        /* 建立左右雙欄格線架構 */
         .chart-grid {
             display: flex;
             flex-wrap: wrap;
             width: 100%;
-            gap: 15px; /* 每張圖表之間的間距 */
+            gap: 20px; /* 每張圖表之間的左右與上下間距 */
         }
 
-        /* 每一格圖表的容器：寬度各佔接近 50% (扣除 gap) */
+        /* 每一格圖表的容器：左右各佔 50% 寬度 (扣除 gap 間距) */
         .chart-box {
-            width: calc(50% - 8px);
-            height: 450px; /* 每張圖表的高度 */
-            border: 1px solid #2a2e39;
-            border-radius: 6px;
-            overflow: hidden;
-            background-color: #131722;
+            width: calc(50% - 10px);
+            height: 500px; /* 每張圖表的高度，你可以自由調大或調小 */
             box-sizing: border-box;
+            background-color: #0F0F0F;
         }
 
-        /* 當螢幕太窄(例如手機)時，自動變成單欄 */
-        @media (max-width: 768px) {
+        /* 手機等窄螢幕時，自動變成單欄排版 */
+        @media (max-width: 900px) {
             .chart-box {
                 width: 100%;
             }
@@ -45,83 +42,145 @@
 
     <div class="chart-grid">
 
-        <!-- 第 1 格：美金兌台幣 (USDTWD) -->
+        <!-- ==================== 🎯 第 1 格：美金兌台幣 (USDTWD) ==================== -->
         <div class="chart-box">
             <div class="tradingview-widget-container" style="height:100%;width:100%">
-                <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-                <script type="text/javascript" src="https://tradingview.com" async>
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <div class="tradingview-widget-copyright"><a href="https://tradingview.com" rel="noopener nofollow" target="_blank"><span class="blue-text">USDTWD 線圖</span></a><span class="trademark"> 由 TradingView 提供</span></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
-                    "autosize": true,
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "details": false,
+                    "hide_side_toolbar": false,
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "hide_volume": false,
+                    "hotlist": false,
+                    "interval": "D",
+                    "locale": "zh_TW",
+                    "save_image": true,
+                    "style": "1",
                     "symbol": "FX_IDC:USDTWD",
-                    "interval": "D",
-                    "timezone": "Asia/Taipei",
                     "theme": "dark",
-                    "style": "1",
-                    "locale": "zh_TW",
-                    "allow_symbol_change": true
+                    "timezone": "Asia/Taipei",
+                    "backgroundColor": "#0F0F0F",
+                    "gridColor": "rgba(242, 242, 242, 0.2)",
+                    "watchlist": [],
+                    "withdateranges": true,
+                    "compareSymbols": [],
+                    "support_host": "https://www.tradingview.com",
+                    "studies": [],
+                    "autosize": true
                 }
                 </script>
             </div>
         </div>
 
-        <!-- 第 2 格：台灣加權指數 (TAIEX) -->
+        <!-- ==================== 🎯 第 2 格：歐元兌台幣 (EURTWD) ==================== -->
         <div class="chart-box">
             <div class="tradingview-widget-container" style="height:100%;width:100%">
-                <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-                <script type="text/javascript" src="https://tradingview.com" async>
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <div class="tradingview-widget-copyright"><a href="https://tradingview.com" rel="noopener nofollow" target="_blank"><span class="blue-text">EURTWD 線圖</span></a><span class="trademark"> 由 TradingView 提供</span></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
-                    "autosize": true,
-                    "symbol": "TWSE:TAIEX",
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "details": false,
+                    "hide_side_toolbar": false,
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "hide_volume": false,
+                    "hotlist": false,
                     "interval": "D",
-                    "timezone": "Asia/Taipei",
-                    "theme": "dark",
-                    "style": "1",
                     "locale": "zh_TW",
-                    "allow_symbol_change": true
-                }
-                </script>
-            </div>
-        </div>
-
-        <!-- 第 3 格：歐元兌台幣 (EURTWD) -->
-        <div class="chart-box">
-            <div class="tradingview-widget-container" style="height:100%;width:100%">
-                <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-                <script type="text/javascript" src="https://tradingview.com" async>
-                {
-                    "autosize": true,
+                    "save_image": true,
+                    "style": "1",
                     "symbol": "FX_IDC:EURTWD",
-                    "interval": "D",
-                    "timezone": "Asia/Taipei",
                     "theme": "dark",
-                    "style": "1",
-                    "locale": "zh_TW",
-                    "allow_symbol_change": true
+                    "timezone": "Asia/Taipei",
+                    "backgroundColor": "#0F0F0F",
+                    "gridColor": "rgba(242, 242, 242, 0.2)",
+                    "watchlist": [],
+                    "withdateranges": true,
+                    "compareSymbols": [],
+                    "support_host": "https://www.tradingview.com",
+                    "studies": [],
+                    "autosize": true
                 }
                 </script>
             </div>
         </div>
 
-        <!-- 第 4 格：日圓兌台幣 (JPYTWD) -->
+        <!-- ==================== 🎯 第 3 格：日圓兌台幣 (JPYTWD) ==================== -->
         <div class="chart-box">
             <div class="tradingview-widget-container" style="height:100%;width:100%">
-                <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-                <script type="text/javascript" src="https://tradingview.com" async>
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <div class="tradingview-widget-copyright"><a href="https://tradingview.com" rel="noopener nofollow" target="_blank"><span class="blue-text">JPYTWD 線圖</span></a><span class="trademark"> 由 TradingView 提供</span></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                 {
-                    "autosize": true,
-                    "symbol": "FX_IDC:JPYTWD",
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "details": false,
+                    "hide_side_toolbar": false,
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "hide_volume": false,
+                    "hotlist": false,
                     "interval": "D",
-                    "timezone": "Asia/Taipei",
-                    "theme": "dark",
-                    "style": "1",
                     "locale": "zh_TW",
-                    "allow_symbol_change": true
+                    "save_image": true,
+                    "style": "1",
+                    "symbol": "FX_IDC:JPYTWD",
+                    "theme": "dark",
+                    "timezone": "Asia/Taipei",
+                    "backgroundColor": "#0F0F0F",
+                    "gridColor": "rgba(242, 242, 242, 0.2)",
+                    "watchlist": [],
+                    "withdateranges": true,
+                    "compareSymbols": [],
+                    "support_host": "https://www.tradingview.com",
+                    "studies": [],
+                    "autosize": true
                 }
                 </script>
             </div>
         </div>
 
-        <!-- 💡 未來你想加第 5、6 張圖，直接複製下方的區塊往後貼，改 "symbol" 即可，網頁會自動排成左右往下加的狀態 -->
+        <!-- ==================== 🎯 第 4 格：台灣加權指數 (TAIEX) ==================== -->
+        <div class="chart-box">
+            <div class="tradingview-widget-container" style="height:100%;width:100%">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <div class="tradingview-widget-copyright"><a href="https://tradingview.com" rel="noopener nofollow" target="_blank"><span class="blue-text">台股加權指數 線圖</span></a><span class="trademark"> 由 TradingView 提供</span></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                {
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "details": false,
+                    "hide_side_toolbar": false,
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "hide_volume": false,
+                    "hotlist": false,
+                    "interval": "D",
+                    "locale": "zh_TW",
+                    "save_image": true,
+                    "style": "1",
+                    "symbol": "TWSE:TAIEX",
+                    "theme": "dark",
+                    "timezone": "Asia/Taipei",
+                    "backgroundColor": "#0F0F0F",
+                    "gridColor": "rgba(242, 242, 242, 0.2)",
+                    "watchlist": [],
+                    "withdateranges": true,
+                    "compareSymbols": [],
+                    "support_host": "https://www.tradingview.com",
+                    "studies": [],
+                    "autosize": true
+                }
+                </script>
+            </div>
+        </div>
 
     </div>
 

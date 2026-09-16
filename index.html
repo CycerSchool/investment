@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外匯即時監控 Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #0c0d14;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        header {
+            width: 100%;
+            height: 46px;
+            background-color: #131722;
+            border-bottom: 1px solid #2a2e39;
+            box-sizing: border-box;
+        }
+        .main-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            height: calc(100vh - 46px);
+        }
+        .chart-section {
+            flex: 3;
+            height: 100%;
+            border-right: 1px solid #2a2e39;
+            box-sizing: border-box;
+        }
+        .sidebar-section {
+            flex: 1;
+            height: 100%;
+            background-color: #131722;
+            box-sizing: border-box;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .panel-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #787b86;
+            margin-bottom: 10px;
+            padding-left: 5px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 📌 區塊一：頂部即時匯率跑馬燈 -->
+    <header>
+        <iframe src="https://tradingview.com"></iframe>
+    </header>
+
+    <!-- 主工作區 -->
+    <div class="main-container">
+        
+        <!-- 📌 區塊二：主圖表（美金兌台幣技術分析 K 線圖） -->
+        <div class="chart-section">
+            <iframe src="https://tradingview.com"></iframe>
+        </div>
+
+        <!-- 📌 區塊三：右側全球外匯市場概況 -->
+        <div class="sidebar-section">
+            <div class="panel-title">📊 全球主要貨幣概況</div>
+            <div style="width: 100%; height: calc(100% - 30px);">
+                <iframe src="https://tradingview.com"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

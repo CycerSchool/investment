@@ -3,134 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>美金兌台幣 (USDTWD) 看板</title>
+    <title>外匯即時監控 Dashboard</title>
     <style>
-        body {
+        /* 讓 Dashboard 自動填滿整個瀏覽器畫面 */
+        html, body {
             margin: 0;
-            padding: 20px;
-            background-color: #0c0d14;
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-        .dashboard-container {
+            padding: 0;
             width: 100%;
-            max-width: 1000px;
-            background-color: #131722;
-            border: 1px solid #2a2e39;
-            border-radius: 8px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        h2 {
-            margin-top: 0;
-            color: #d1d4dc;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .price-display {
-            font-size: 32px;
-            font-weight: bold;
-            color: #26a69a;
-            margin: 10px 0 20px 0;
-        }
-        #chart {
-            width: 100%;
-            height: 450px;
+            height: 100%;
+            background-color: #0F0F0F;
+            overflow: hidden;
         }
     </style>
-    <!-- 引入官方輕量級圖表引擎，免除 iframe 阻擋問題 -->
-    <script src="https://unpkg.com"></script>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <h2>📈 美金 / 新台幣 (USD/TWD) 技術分析儀表板</h2>
-        <div class="price-display" id="current-price">32.450</div>
-        <div id="chart"></div>
-    </div>
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container" style="height:100%;width:100%">
+  <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+  <div class="tradingview-widget-copyright"><a href="https://tradingview.com" rel="noopener nofollow" target="_blank"><span class="blue-text">USDTWD 線圖</span></a><span class="trademark"> 由 TradingView 提供</span></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+  {
+  "allow_symbol_change": true,
+  "calendar": false,
+  "details": false,
+  "hide_side_toolbar": false,
+  "hide_top_toolbar": false,
+  "hide_legend": false,
+  "hide_volume": false,
+  "hotlist": false,
+  "interval": "D",
+  "locale": "zh_TW",
+  "save_image": true,
+  "style": "1",
+  "symbol": "FX_IDC:USDTWD",
+  "theme": "dark",
+  "timezone": "Asia/Taipei",
+  "backgroundColor": "#0F0F0F",
+  "gridColor": "rgba(242, 242, 242, 0.2)",
+  "watchlist": [],
+  "withdateranges": true,
+  "compareSymbols": [],
+  "support_host": "https://www.tradingview.com",
+  "studies": [],
+  "autosize": true
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
 
-    <script>
-        // 1. 初始化圖表設定
-        const chartContainer = document.getElementById('chart');
-        const chart = LightweightCharts.createChart(chartContainer, {
-            width: chartContainer.clientWidth,
-            height: 450,
-            layout: {
-                backgroundColor: '#131722',
-                textColor: '#d1d4dc',
-            },
-            grid: {
-                vertLines: { color: 'rgba(42, 46, 57, 0.5)' },
-                horzLines: { color: 'rgba(42, 46, 57, 0.5)' },
-            },
-            crosshair: {
-                mode: LightweightCharts.CrosshairMode.Normal,
-            },
-            priceScale: {
-                borderColor: 'rgba(197, 203, 206, 0.8)',
-            },
-            timeScale: {
-                borderColor: 'rgba(197, 203, 206, 0.8)',
-                timeVisible: true,
-            },
-        });
-
-        // 2. 建立 K 線數列
-        const candleSeries = chart.addCandlestickSeries({
-            upColor: '#26a69a',
-            downColor: '#ef5350',
-            borderDownColor: '#ef5350',
-            borderUpColor: '#26a69a',
-            wickDownColor: '#ef5350',
-            wickUpColor: '#26a69a',
-        });
-
-        // 3. 模擬美金兌台幣歷史 K 線數據 (解決第三方 API 跨網域阻擋問題)
-        const generateData = () => {
-            const data = [];
-            let basePrice = 32.15;
-            const today = new Date();
-            
-            for (let i = 90; i >= 0; i--) {
-                const date = new Date(today);
-                date.setDate(today.getDate() - i);
-                
-                const open = basePrice + (Math.random() - 0.5) * 0.1;
-                const close = open + (Math.random() - 0.5) * 0.1;
-                const high = Math.max(open, close) + Math.random() * 0.05;
-                const low = Math.min(open, close) - Math.random() * 0.05;
-                
-                data.push({
-                    time: date.toISOString().split('T')[0],
-                    open: parseFloat(open.toFixed(3)),
-                    high: parseFloat(high.toFixed(3)),
-                    low: parseFloat(low.toFixed(3)),
-                    close: parseFloat(close.toFixed(3))
-                });
-                
-                basePrice = close;
-            }
-            return data;
-        };
-
-        const chartData = generateData();
-        candleSeries.setData(chartData);
-
-        // 4. 更新看板當前價格顯示
-        const latestPrice = chartData[chartData.length - 1].close;
-        document.getElementById('current-price').innerText = latestPrice.toFixed(3);
-
-        // 5. 視窗大小改變時自動縮放圖表
-        window.addEventListener('resize', () => {
-            chart.resize(chartContainer.clientWidth, 450);
-        });
-    </script>
 </body>
 </html>

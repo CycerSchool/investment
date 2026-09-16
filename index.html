@@ -3,54 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>外匯即時監控 Dashboard</title>
+    <title>外匯/股票 專業監控 Dashboard</title>
     <style>
-        /* 讓 Dashboard 自動填滿整個瀏覽器畫面 */
+        /* 基礎樣式與科技感深色主題 */
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             background-color: #0F0F0F;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden; /* 防止整頁出現雙重捲軸 */
+        }
+
+        /* 核心架構：左右分成兩大格 */
+        .dashboard-main {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* ⬅️ 左半邊：主圖表區（固定寬度 50%，高 100% 不動） */
+        .left-panel {
+            flex: 1;
+            height: 100%;
+            border-right: 2px solid #2a2e39;
+            box-sizing: border-box;
+            background-color: #0F0F0F;
+        }
+
+        /* ➡️ 右半邊：動態牆區（寬度 50%，內容太多時會自動出現捲軸一直往下滾） */
+        .right-panel {
+            flex: 1;
+            height: 100%;
+            overflow-y: auto; /* 關鍵：開啟垂直滾動條 */
+            box-sizing: border-box;
+            padding: 10px;
+            background-color: #0c0d14;
+        }
+
+        /* 右側每一格圖表的容器樣式 */
+        .sub-chart-container {
+            width: 100%;
+            height: 400px; /* 右邊每張圖的高度，你可以自由調整 */
+            margin-bottom: 20px; /* 圖片與圖片之間的間距 */
+            background-color: #131722;
+            border: 1px solid #2a2e39;
+            border-radius: 6px;
             overflow: hidden;
         }
     </style>
 </head>
 <body>
 
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container" style="height:100%;width:100%">
-  <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-  <div class="tradingview-widget-copyright"><a href="https://tradingview.com" rel="noopener nofollow" target="_blank"><span class="blue-text">USDTWD 線圖</span></a><span class="trademark"> 由 TradingView 提供</span></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-  {
-  "allow_symbol_change": true,
-  "calendar": false,
-  "details": false,
-  "hide_side_toolbar": false,
-  "hide_top_toolbar": false,
-  "hide_legend": false,
-  "hide_volume": false,
-  "hotlist": false,
-  "interval": "D",
-  "locale": "zh_TW",
-  "save_image": true,
-  "style": "1",
-  "symbol": "FX_IDC:USDTWD",
-  "theme": "dark",
-  "timezone": "Asia/Taipei",
-  "backgroundColor": "#0F0F0F",
-  "gridColor": "rgba(242, 242, 242, 0.2)",
-  "watchlist": [],
-  "withdateranges": true,
-  "compareSymbols": [],
-  "support_host": "https://www.tradingview.com",
-  "studies": [],
-  "autosize": true
-}
-  </script>
-</div>
-<!-- TradingView Widget END -->
+    <div class="dashboard-main">
+        
+        <!-- =======================================================
+             ⬅️ 左半邊：核心看盤區（固定顯示 美金兌台幣 USDTWD）
+             ======================================================= -->
+        <div class="left-panel">
+            <div class="tradingview-widget-container" style="height:100%;width:100%">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <script type="text/javascript" src="https://tradingview.com" async>
+                {
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "details": false,
+                    "hide_side_toolbar": false,
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "hide_volume": false,
+                    "interval": "D",
+                    "locale": "zh_TW",
+                    "save_image": true,
+                    "style": "1",
+                    "symbol": "FX_IDC:USDTWD",
+                    "theme": "dark",
+                    "timezone": "Asia/Taipei",
+                    "backgroundColor": "#0F0F0F",
+                    "gridColor": "rgba(242, 242, 242, 0.2)",
+                    "withdateranges": true,
+                    "autosize": true
+                }
+                </script>
+            </div>
+        </div>
+
+        <!-- =======================================================
+             ➡️ 右半邊：動態延伸區（可以無限往下追加新圖表）
+             ======================================================= -->
+        <div class="right-panel">
+
+            <!-- 🎯 右側第 1 格：歐元兌台幣 (EURTWD) -->
+            <div class="sub-chart-container">
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                    <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+                    <script type="text/javascript" src="https://tradingview.com" async>
+                    {
+                        "allow_symbol_change": true,
+                        "interval": "D",
+                        "locale": "zh_TW",
+                        "style": "1",
+                        "symbol": "FX_IDC:EURTWD",
+                        "theme": "dark",
+                        "timezone": "Asia/Taipei",
+                        "backgroundColor": "#131722",
+                        "autosize": true
+                    }
+                    </script>
+                </div>
+            </div>
+
+            <!-- 🎯 右側第 2 格：日圓兌台幣 (JPYTWD) -->
+            <div class="sub-chart-container">
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                    <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+                    <script type="text/javascript" src="https://tradingview.com" async>
+                    {
+                        "allow_symbol_change": true,
+                        "interval": "D",
+                        "locale": "zh_TW",
+                        "style": "1",
+                        "symbol": "FX_IDC:JPYTWD",
+                        "theme": "dark",
+                        "timezone": "Asia/Taipei",
+                        "backgroundColor": "#131722",
+                        "autosize": true
+                    }
+                    </script>
+                </div>
+            </div>
+
+            <!-- 🎯 右側第 3 格：台灣加權指數 (TAIEX 大盤) -->
+            <div class="sub-chart-container">
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                    <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+                    <script type="text/javascript" src="https://tradingview.com" async>
+                    {
+                        "allow_symbol_change": true,
+                        "interval": "D",
+                        "locale": "zh_TW",
+                        "style": "1",
+                        "symbol": "TWSE:TAIEX",
+                        "theme": "dark",
+                        "timezone": "Asia/Taipei",
+                        "backgroundColor": "#131722",
+                        "autosize": true
+                    }
+                    </script>
+                </div>
+            </div>
+
+            <!-- 🎯 右側第 4 格：台積電 (2330) -->
+            <div class="sub-chart-container">
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                    <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+                    <script type="text/javascript" src="https://tradingview.com" async>
+                    {
+                        "allow_symbol_change": true,
+                        "interval": "D",
+                        "locale": "zh_TW",
+                        "style": "1",
+                        "symbol": "TWSE:2330",
+                        "theme": "dark",
+                        "timezone": "Asia/Taipei",
+                        "backgroundColor": "#131722",
+                        "autosize": true
+                    }
+                    </script>
+                </div>
+            </div>
+
+            <!-- 💡 未來你想再增加第 5 格、第 6 格，直接複製上面的 sub-chart-container 區塊往下貼，並修改 "symbol" 即可！ -->
+
+        </div>
+
+    </div>
 
 </body>
 </html>

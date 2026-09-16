@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>外匯即時監控 Dashboard</title>
     <style>
+        /* 基礎網頁樣式：打造科技感深色主題 */
         body {
             margin: 0;
             padding: 0;
@@ -16,6 +17,8 @@
             flex-direction: column;
             overflow: hidden;
         }
+
+        /* 頂部跑馬燈區塊 */
         header {
             width: 100%;
             height: 46px;
@@ -23,18 +26,24 @@
             border-bottom: 1px solid #2a2e39;
             box-sizing: border-box;
         }
+
+        /* 主要內容區：左右分欄 */
         .main-container {
             display: flex;
             flex: 1;
             width: 100%;
             height: calc(100vh - 46px);
         }
+
+        /* 左側/中間：主圖表區 */
         .chart-section {
             flex: 3;
             height: 100%;
             border-right: 1px solid #2a2e39;
             box-sizing: border-box;
         }
+
+        /* 右側：市場概況區 */
         .sidebar-section {
             flex: 1;
             height: 100%;
@@ -44,6 +53,8 @@
             display: flex;
             flex-direction: column;
         }
+
+        /* 標題欄樣式 */
         .panel-title {
             font-size: 14px;
             font-weight: bold;
@@ -51,33 +62,95 @@
             margin-bottom: 10px;
             padding-left: 5px;
         }
-        iframe {
+
+        /* 填滿容器的基本樣式 */
+        .widget-container {
             width: 100%;
             height: 100%;
-            border: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- 📌 區塊一：頂部即時匯率跑馬燈 -->
+    <!-- 📌 區塊一：頂部即時匯率跑馬燈（官方正式授權腳本） -->
     <header>
-        <iframe src="https://tradingview.com"></iframe>
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://tradingview.com" async>
+            {
+                "symbols": [
+                    { "proName": "FX_IDC:USDTWD", "title": "美金/台幣" },
+                    { "proName": "FX_IDC:EURTWD", "title": "歐元/台幣" },
+                    { "proName": "FX_IDC:JPYTWD", "title": "日圓/台幣" }
+                ],
+                "showSymbolLogo": true,
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "displayMode": "adaptive",
+                "locale": "zh_TW"
+            }
+            </script>
+        </div>
     </header>
 
     <!-- 主工作區 -->
     <div class="main-container">
         
-        <!-- 📌 區塊二：主圖表（美金兌台幣技術分析 K 線圖） -->
+        <!-- 📌 區塊二：主圖表（官方標準技術分析 K 線圖載入器，完美防封鎖） -->
         <div class="chart-section">
-            <iframe src="https://tradingview.com"></iframe>
+            <div class="widget-container" id="tv-chart-container"></div>
+            <!-- 載入 TradingView 核心函式庫 -->
+            <script type="text/javascript" src="https://tradingview.com"></script>
+            <script type="text/javascript">
+                new TradingView.widget({
+                    "width": "100%",
+                    "height": "100%",
+                    "symbol": "FX_IDC:USDTWD",
+                    "interval": "D",
+                    "timezone": "Asia/Taipei",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "zh_TW",
+                    "toolbar_bg": "#f1f3f6",
+                    "enable_publishing": false,
+                    "hide_side_toolbar": false,
+                    "allow_symbol_change": true,
+                    "container_id": "tv-chart-container"
+                });
+            </script>
         </div>
 
-        <!-- 📌 區塊三：右側全球外匯市場概況 -->
+        <!-- 📌 區塊三：右側全球外匯市場概況（官方正式授權腳本） -->
         <div class="sidebar-section">
             <div class="panel-title">📊 全球主要貨幣概況</div>
-            <div style="width: 100%; height: calc(100% - 30px);">
-                <iframe src="https://tradingview.com"></iframe>
+            <div style="width: 100%; flex: 1;">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://tradingview.com" async>
+                    {
+                        "colorTheme": "dark",
+                        "dateRange": "12M",
+                        "showMarkets": true,
+                        "trendLineColor": "#37a6ef",
+                        "underLineColor": "rgba(55, 166, 239, 0.15)",
+                        "underLineBottomColor": "rgba(55, 166, 239, 0)",
+                        "isTransparent": true,
+                        "width": "100%",
+                        "height": "100%",
+                        "locale": "zh_TW",
+                        "tabs": [
+                            {
+                                "title": "外匯 (Forex)",
+                                "symbols": [
+                                    { "s": "FX_IDC:USDTWD" },
+                                    { "s": "FX:EURUSD" },
+                                    { "s": "FX:USDJPY" }
+                                ]
+                            }
+                        ]
+                    }
+                    </script>
+                </div>
             </div>
         </div>
 
